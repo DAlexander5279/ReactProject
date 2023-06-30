@@ -11,7 +11,7 @@ export interface Games {
   }
   
   //Inteface for the Platform Object, Will contain the information for the platform for the games
-  interface Platform{
+  export interface Platform{
     id : number;
     name: string;
     slug: string;
