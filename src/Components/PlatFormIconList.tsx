@@ -34,7 +34,7 @@ const PlatFormIconList = ({ platforms }: Props) => {
 
   //returns a horizontal stack of icons
   return (
-    <HStack>
+    <HStack marginY={1}>
       {platforms.map((platform) => (
         <Icon as={iconMap[platform.slug]} color="gray.400" />
       ))}
