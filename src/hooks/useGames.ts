@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import apiToClient from "../services/apiToClient";
+import { Genre } from "./useGenres";
+import useData from "./useData";
 
 
 //whole interface for each game in the api
@@ -17,24 +19,5 @@ export interface Games {
     name: string;
     slug: string;
   }
-  interface FetchedGames {
-    count: number;
-    results: Games[];
-
-  }
-
-const useGames = () => {
-    const [games, setGames] = useState<Games[]>([]);
-    useEffect(() => {
-        const controller = new AbortController();
-      apiToClient
-        .get<FetchedGames>("/games", {signal: controller.signal})
-        .then((res) => setGames(res.data.results));
-
-        return () => controller.abort();
-    }, []);
-
-    return {games}
-  
-}
+const useGames = (selectedGenre : Genre | null) => useData<Games>('/games', {params: {genres: selectedGenre?.id}},[selectedGenre?.id])
 export default useGames;
