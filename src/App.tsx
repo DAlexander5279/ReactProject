@@ -4,10 +4,15 @@ import GameTable from "./Components/TableOfGames";
 import GenreList from "./Components/GenreList";
 import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
+import { Platform } from "./hooks/useGames";
+
+export interface SharedGame {
+  genre: Genre | null;
+  searchText: string;
+}
 
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-
+  const [sharedGame, setSharedGame] = useState<SharedGame>({} as SharedGame);
   return (
     <Grid
       templateAreas={{
@@ -16,15 +21,21 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar
+          onSearch={(searchText) =>
+            setSharedGame({ ...sharedGame, searchText })
+          }
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <GenreList onSelectGenre={(genre) => setSelectedGenre(genre)} />
+          <GenreList
+            onSelectGenre={(genre) => setSharedGame({ ...sharedGame, genre })}
+          />
         </GridItem>
       </Show>
       <GridItem area="main">
-        <GameTable selectedGenre={selectedGenre} />
+        <GameTable sharedGame={sharedGame} />
       </GridItem>
     </Grid>
   );

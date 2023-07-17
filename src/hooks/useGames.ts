@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import apiToClient from "../services/apiToClient";
 import { Genre } from "./useGenres";
 import useData from "./useData";
+import { SharedGame } from "../App";
 
 
 //whole interface for each game in the api
@@ -19,5 +20,5 @@ export interface Games {
     name: string;
     slug: string;
   }
-const useGames = (selectedGenre : Genre | null) => useData<Games>('/games', {params: {genres: selectedGenre?.id}},[selectedGenre?.id])
+const useGames = (sharedGame: SharedGame) => useData<Games>('/games', {params: {genres: sharedGame.genre?.id, search: sharedGame.searchText}},[sharedGame])
 export default useGames;

@@ -1,23 +1,31 @@
-import { Input } from "@chakra-ui/react";
+import { Input, InputGroup } from "@chakra-ui/react";
 import { useRef } from "react";
 
-const SearchBar = () => {
+interface Props {
+  onSearch: (searchGame: string) => void;
+}
+
+const SearchBar = ({ onSearch }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
-  <form
-    onSubmit={(event) => {
-      event.preventDefault();
-    }}
-  >
-    return{" "}
-    <Input
-      ref={ref}
-      borderRadius={20}
-      placeholder="Search"
-      variant={"filled"}
-    />
-    ;
-  </form>;
+  return (
+    <form
+      style={{ width: "100%" }}
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (ref.current) onSearch(ref.current.value);
+      }}
+    >
+      <InputGroup>
+        <Input
+          ref={ref}
+          borderRadius={20}
+          placeholder="Search"
+          variant={"filled"}
+        />
+      </InputGroup>
+    </form>
+  );
 };
 
 export default SearchBar;
